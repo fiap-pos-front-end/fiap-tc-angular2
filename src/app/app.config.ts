@@ -19,11 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAnimationsAsync(),
-    providePrimeNG({
-      theme: {
-        preset: Aura,
-      },
-    }),
+    providePrimeNG(),
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
 };
