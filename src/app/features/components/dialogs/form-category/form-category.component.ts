@@ -19,6 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [FormsModule, InputTextModule, ButtonModule],
   templateUrl: './form-category.component.html',
   styleUrl: './form-category.component.scss',
+  providers: [CategoryService],
 })
 export class FormCategoryComponent implements OnInit {
   private destroyRef = inject(DestroyRef);

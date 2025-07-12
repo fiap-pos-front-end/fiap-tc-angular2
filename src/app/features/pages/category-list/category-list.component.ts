@@ -23,7 +23,7 @@ import { finalize } from 'rxjs';
   imports: [CommonModule, ...PRIMENG_MODULES],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss',
-  providers: [DialogService, MessageService],
+  providers: [CategoryService, DialogService, MessageService],
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
   @ViewChild('dt') dt!: Table;

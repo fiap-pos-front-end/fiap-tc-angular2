@@ -11,6 +11,7 @@ import { Category } from '../../../../shared/models/category.model';
   imports: [ButtonModule, ToastModule],
   templateUrl: './delete-category.component.html',
   styleUrl: './delete-category.component.scss',
+  providers: [CategoryService],
 })
 export class DeleteCategoryComponent {
   private destroyRef = inject(DestroyRef);
