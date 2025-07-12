@@ -1,4 +1,16 @@
-<p>Tem certeza que deseja deletar a categoria {{ category.name }}?</p>
+<p>Tem certeza que deseja remover a categoria {{ category.name }}?</p>
 
-<p-button type="button" label="Sim" (click)="remove()" />
-<p-button type="button" label="Cancelar" (click)="close()" />
+<div class="flex justify-between mt-3 w-full">
+  <p-button
+    type="button"
+    severity="secondary"
+    label="Cancelar"
+    (click)="close()"
+  />
+  <p-button
+    type="button"
+    severity="danger"
+    label="Remover"
+    (click)="remove()"
+  />
+</div>

@@ -1,7 +1,14 @@
 <div>
-  <label for="name" class="block mb-2 font-bold">Descrição</label>
+  <label for="name" class="block mb-2 font-bold">Categoria</label>
   <input type="text" pInputText id="name" [(ngModel)]="name" fluid />
 </div>
 
-<p-button type="button" label="Salvar" (click)="save()" />
-<p-button type="button" label="Cancelar" (click)="close()" />
+<div class="flex justify-between mt-3 w-full">
+  <p-button
+    type="button"
+    severity="secondary"
+    label="Cancelar"
+    (click)="close()"
+  />
+  <p-button type="button" label="Salvar" (click)="save()" />
+</div>

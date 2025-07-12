@@ -19,7 +19,6 @@ import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 @Component({
   selector: 'app-category-list',
-
   imports: [CommonModule, ...PRIMENG_MODULES],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss',
