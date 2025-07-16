@@ -5,6 +5,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -17,9 +18,10 @@ import { Table } from 'primeng/table';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-category-list',
-  imports: [CommonModule, ...PRIMENG_MODULES],
+  imports: [CommonModule, ...PRIMENG_MODULES, FormsModule],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss',
   providers: [CategoryService, DialogService, MessageService],
@@ -32,9 +34,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   private messageService = inject(MessageService);
   private ref: DynamicDialogRef;
   categories: Category[] = [];
-  searchValue: string;
   loading = false;
-
+  searchInput = signal<string>('');
   ngOnInit(): void {
     this.fillTable();
   }
@@ -61,7 +62,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
   clear(table: any) {
     table.clear();
-    this.searchValue = '';
+    this.searchInput.set('');
   }
   ngOnDestroy(): void {
     if (this.ref) {
