@@ -1,39 +1,48 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Category, CategoryPayload } from '../models/category.model';
 import { map, Observable } from 'rxjs';
-import { ApiResponse } from '../types/api-response';
+import { environment } from '../../../environments/environment';
 import { CategoryDto } from '../models/category.dto';
+import { Category, CategoryPayload } from '../models/category.model';
+import { ApiResponse } from '../types/api-response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  protected urlApi = 'http://localhost:3000/category';
-  private httpClient = inject(HttpClient);
+  private readonly httpClient = inject(HttpClient);
+
+  private readonly categoryBaseUrl = `${environment.apiUrl}/category`;
 
   getAll(): Observable<Category[]> {
     return this.httpClient
-      .get<ApiResponse<CategoryDto[]>>(`${this.urlApi}`)
+      .get<ApiResponse<CategoryDto[]>>(`${this.categoryBaseUrl}`)
       .pipe(map((res) => res?.result.map((dto) => this.mapDtoToModel(dto))));
   }
+
   create(category: CategoryPayload): Observable<Category> {
     return this.httpClient
-      .post<ApiResponse<CategoryDto>>(`${this.urlApi}`, category)
+      .post<ApiResponse<CategoryDto>>(`${this.categoryBaseUrl}`, category)
       .pipe(
         map((res) => {
           return this.mapDtoToModel(res?.result);
         })
       );
   }
+
   update(category: Category): Observable<Category> {
     return this.httpClient
-      .put<ApiResponse<CategoryDto>>(`${this.urlApi}/${category.id}`, category)
+      .put<ApiResponse<CategoryDto>>(
+        `${this.categoryBaseUrl}/${category.id}`,
+        category
+      )
       .pipe(map((res) => this.mapDtoToModel(res?.result)));
   }
+
   delete(id: string): Observable<Category> {
-    return this.httpClient.delete<Category>(`${this.urlApi}/${id}`);
+    return this.httpClient.delete<Category>(`${this.categoryBaseUrl}/${id}`);
   }
+
   private mapDtoToModel(dto: CategoryDto): Category {
     const { _id, ...rest } = dto;
     return { id: _id, ...rest };
