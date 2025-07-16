@@ -3,11 +3,13 @@
   <input type="text" pInputText id="name" [(ngModel)]="name" fluid />
 </div>
 
-<div class="flex justify-between mt-3 w-full">
+<div class="flex justify-content-end mt-3 w-full">
   <p-button
+    class="mr-2"
     type="button"
-    severity="secondary"
     label="Cancelar"
+    icon="pi pi-times"
+    variant="text"
     (click)="close()"
   />
   <p-button type="button" label="Salvar" (click)="save()" />

@@ -90,7 +90,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.ref = this.dialogService.open(component, {
       header: title,
       focusOnShow: false,
-      width: '50vw',
+      closable: true,
+      width: '30vw',
       modal: true,
       breakpoints: {
         '960px': '75vw',
