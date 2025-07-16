@@ -31,7 +31,7 @@ export class DeleteCategoryComponent {
       .delete(this.category.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.ref.close(true);
+        this.ref.close(this.config.data.category);
       });
   }
 }

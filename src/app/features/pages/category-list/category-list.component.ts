@@ -33,7 +33,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   private categoryService = inject(CategoryService);
   private messageService = inject(MessageService);
   private ref: DynamicDialogRef;
-  categories: Category[] = [];
+  readonly categories = signal<Category[]>([]);
   loading = false;
   searchInput = signal<string>('');
   ngOnInit(): void {
@@ -70,7 +70,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     }
   }
   private fillTable() {
-    this.categories = [];
     this.loading = true;
     this.categoryService
       .getAll()
@@ -79,7 +78,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         finalize(() => (this.loading = false))
       )
       .subscribe((categories) => {
-        this.categories = categories;
+        this.categories.set(categories);
       });
   }
   private createDialog(
@@ -102,16 +101,34 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       inputValues,
     });
 
-    this.ref.onClose.subscribe((data: boolean) => {
+    this.ref.onClose.subscribe((data: Category) => {
       if (data) {
+        this.changeTable(title, data);
         this.messageService.add({
           severity: 'success',
           summary: 'Sucesso',
           detail: 'Operação realizada com sucesso!',
           life: 3000,
         });
-        this.fillTable();
       }
     });
+  }
+  private changeTable(title: string, data: Category) {
+    title.includes('Adicionar')
+      ? this.addTable(data)
+      : title.includes('Atualizar')
+      ? this.updTable(data)
+      : this.delTable(data);
+  }
+  private addTable(data: Category) {
+    this.categories.update((list) => [...list, data]);
+  }
+  private updTable(data: Category) {
+    this.categories.update((list) =>
+      list.map((cat) => (cat.id === data.id ? data : cat))
+    );
+  }
+  private delTable(data: Category) {
+    this.categories.update((list) => list.filter((cat) => cat.id !== data.id));
   }
 }

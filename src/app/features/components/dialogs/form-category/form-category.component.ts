@@ -34,8 +34,6 @@ export class FormCategoryComponent implements OnInit {
   save() {
     if (this.isAdding) this.createCategory();
     else this.updateCategory();
-
-    this.ref.close(true);
   }
   close() {
     this.ref.close();
@@ -45,16 +43,16 @@ export class FormCategoryComponent implements OnInit {
     this.categoryService
       .create({ name: this.name() })
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.ref.close(true);
+      .subscribe((res) => {
+        this.ref.close(res);
       });
   }
   private updateCategory() {
     this.categoryService
       .update({ id: this.config.data.id, name: this.name() })
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.ref.close(true);
+      .subscribe((res) => {
+        this.ref.close(res);
       });
   }
 }
