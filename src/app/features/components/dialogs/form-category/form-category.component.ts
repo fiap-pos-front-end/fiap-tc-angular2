@@ -1,18 +1,10 @@
-import {
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  input,
-  model,
-  OnInit,
-} from '@angular/core';
+import { Component, DestroyRef, inject, model, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { CategoryService } from '../../../../shared/services/category.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-form-category',
@@ -28,13 +20,16 @@ export class FormCategoryComponent implements OnInit {
   private categoryService = inject(CategoryService);
   name = model('');
   isAdding = true;
+
   ngOnInit(): void {
     this.isAdding = this.config.header?.includes('Adicionar') ?? true;
   }
+
   save() {
     if (this.isAdding) this.createCategory();
     else this.updateCategory();
   }
+
   close() {
     this.ref.close();
   }
@@ -47,6 +42,7 @@ export class FormCategoryComponent implements OnInit {
         this.ref.close(res);
       });
   }
+
   private updateCategory() {
     this.categoryService
       .update({ id: this.config.data.id, name: this.name() })

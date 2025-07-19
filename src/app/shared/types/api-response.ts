@@ -1,4 +1,1 @@
-export type ApiResponse<T> = {
-  message: string;
-  result: T;
-};
+export type ApiResponse<T> = T;

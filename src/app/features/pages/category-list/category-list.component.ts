@@ -8,17 +8,17 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FormCategoryComponent } from '../../components/dialogs/form-category/form-category.component';
-import { Category } from '../../../shared/models/category.model';
-import { DeleteCategoryComponent } from '../../components/dialogs/delete-category/delete-category.component';
-import { CategoryService } from '../../../shared/services/category.service';
-import { PRIMENG_MODULES } from './primeng-modules';
-import { Table } from 'primeng/table';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MessageService } from 'primeng/api';
-import { finalize } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Table } from 'primeng/table';
+import { finalize } from 'rxjs';
+import { Category } from '../../../shared/models/category.model';
+import { CategoryService } from '../../../shared/services/category.service';
+import { DeleteCategoryComponent } from '../../components/dialogs/delete-category/delete-category.component';
+import { FormCategoryComponent } from '../../components/dialogs/form-category/form-category.component';
+import { PRIMENG_MODULES } from './primeng-modules';
 @Component({
   selector: 'app-category-list',
   imports: [CommonModule, ...PRIMENG_MODULES, FormsModule],
@@ -27,21 +27,27 @@ import { FormsModule } from '@angular/forms';
   providers: [CategoryService, DialogService, MessageService],
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
-  @ViewChild('dt') dt!: Table;
   private destroyRef = inject(DestroyRef);
   private dialogService = inject(DialogService);
-  private categoryService = inject(CategoryService);
   private messageService = inject(MessageService);
+  private categoryService = inject(CategoryService);
+
+  @ViewChild('dt') dt!: Table;
+
   private ref: DynamicDialogRef;
   readonly categories = signal<Category[]>([]);
+
   loading = false;
   searchInput = signal<string>('');
+
   ngOnInit(): void {
     this.fillTable();
   }
+
   newCategory() {
     this.createDialog(FormCategoryComponent, 'Adicionar Categoria');
   }
+
   updateCategory(category: Category) {
     const data = { id: category.id };
     const inputValues = { name: category.name };
@@ -52,23 +58,28 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       inputValues
     );
   }
+
   deleteCategory(category: Category) {
     this.createDialog(DeleteCategoryComponent, 'Remover Categoria', {
       category,
     });
   }
+
   onSearchInput(event: Event) {
     this.dt.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
   clear(table: any) {
     table.clear();
     this.searchInput.set('');
   }
+
   ngOnDestroy(): void {
     if (this.ref) {
       this.ref.close();
     }
   }
+
   private fillTable() {
     this.loading = true;
     this.categoryService
@@ -81,6 +92,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.categories.set(categories);
       });
   }
+
   private createDialog(
     component: any,
     title: string,
@@ -113,6 +125,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   private changeTable(title: string, data: Category) {
     title.includes('Adicionar')
       ? this.addTable(data)
@@ -120,14 +133,17 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       ? this.updTable(data)
       : this.delTable(data);
   }
+
   private addTable(data: Category) {
     this.categories.update((list) => [...list, data]);
   }
+
   private updTable(data: Category) {
     this.categories.update((list) =>
       list.map((cat) => (cat.id === data.id ? data : cat))
     );
   }
+
   private delTable(data: Category) {
     this.categories.update((list) => list.filter((cat) => cat.id !== data.id));
   }

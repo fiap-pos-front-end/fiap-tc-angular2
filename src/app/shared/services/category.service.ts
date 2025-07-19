@@ -12,22 +12,18 @@ import { ApiResponse } from '../types/api-response';
 export class CategoryService {
   private readonly httpClient = inject(HttpClient);
 
-  private readonly categoryBaseUrl = `${environment.apiUrl}/category`;
+  private readonly categoryBaseUrl = `${environment.apiUrl}/categories`;
 
   getAll(): Observable<Category[]> {
     return this.httpClient
       .get<ApiResponse<CategoryDto[]>>(`${this.categoryBaseUrl}`)
-      .pipe(map((res) => res?.result.map((dto) => this.mapDtoToModel(dto))));
+      .pipe(map((res) => res.map((dto) => this.mapDtoToModel(dto))));
   }
 
   create(category: CategoryPayload): Observable<Category> {
     return this.httpClient
       .post<ApiResponse<CategoryDto>>(`${this.categoryBaseUrl}`, category)
-      .pipe(
-        map((res) => {
-          return this.mapDtoToModel(res?.result);
-        })
-      );
+      .pipe(map((res) => this.mapDtoToModel(res)));
   }
 
   update(category: Category): Observable<Category> {
@@ -36,7 +32,7 @@ export class CategoryService {
         `${this.categoryBaseUrl}/${category.id}`,
         category
       )
-      .pipe(map((res) => this.mapDtoToModel(res?.result)));
+      .pipe(map((res) => this.mapDtoToModel(res)));
   }
 
   delete(id: string): Observable<Category> {
@@ -44,7 +40,6 @@ export class CategoryService {
   }
 
   private mapDtoToModel(dto: CategoryDto): Category {
-    const { _id, ...rest } = dto;
-    return { id: _id, ...rest };
+    return { id: dto.id, name: dto.name };
   }
 }
