@@ -69,6 +69,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.dt.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
+  onExportCsvClicked() {
+    this.dt.exportCSV();
+  }
+
   clear(table: any) {
     table.clear();
     this.searchInput.set('');

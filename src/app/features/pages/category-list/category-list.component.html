@@ -4,33 +4,39 @@
 </p>
 
 <p-toast />
+
 <p-toolbar class="mb-6">
   <ng-template #start>
-    <p-button
-      label="Nova"
-      icon="pi pi-plus"
-      class="mr-2"
-      (onClick)="newCategory()"
-    />
-    <p-button
-      label="Limpar Filtros"
-      [outlined]="true"
-      icon="pi pi-filter-slash"
-      (click)="clear(dt)"
-    />
-  </ng-template>
-
-  <ng-template #end>
-    <p-iconfield>
+    <p-iconfield class="mr-2 w-full">
       <p-inputicon class="pi pi-search" />
       <input
         pInputText
         type="text"
-        [(ngModel)]="searchInput"
         placeholder="Pesquisar..."
+        [(ngModel)]="searchInput"
         (input)="onSearchInput($event)"
+        class="w-full"
       />
     </p-iconfield>
+    <p-button
+      class="mr-2"
+      severity="warn"
+      [outlined]="true"
+      icon="pi pi-filter-slash"
+      (click)="clear(dt)"
+    />
+    <!-- Escondido porque ainda não temos exportação de csv -->
+    <p-button
+      class="mr-2"
+      icon="pi pi-download"
+      severity="secondary"
+      (onClick)="onExportCsvClicked()"
+      [hidden]="true"
+    />
+  </ng-template>
+
+  <ng-template #end>
+    <p-button label="Nova" icon="pi pi-plus" (onClick)="newCategory()" />
   </ng-template>
 </p-toolbar>
 
