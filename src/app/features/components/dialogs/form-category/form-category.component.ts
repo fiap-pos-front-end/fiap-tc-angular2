@@ -10,7 +10,6 @@ import { CategoryService } from '../../../../shared/services/category.service';
   selector: 'app-form-category',
   imports: [FormsModule, InputTextModule, ButtonModule],
   templateUrl: './form-category.component.html',
-  styleUrl: './form-category.component.scss',
   providers: [CategoryService],
 })
 export class FormCategoryComponent implements OnInit {

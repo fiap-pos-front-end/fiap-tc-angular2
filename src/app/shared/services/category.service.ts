@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { CategoryResponsePayload } from '@fiap-pos-front-end/fiap-tc-shared';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CategoryDto } from '../models/category.dto';
-import { Category, CategoryPayload } from '../models/category.model';
 import { ApiResponse } from '../types/api-response';
+
+// TODO: também tem que vir do shared, mas como ia mexer muita coisa, deixei pra depois
+import { Category, CategoryPayload } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,19 +18,22 @@ export class CategoryService {
 
   getAll(): Observable<Category[]> {
     return this.httpClient
-      .get<ApiResponse<CategoryDto[]>>(`${this.categoryBaseUrl}`)
+      .get<ApiResponse<CategoryResponsePayload[]>>(`${this.categoryBaseUrl}`)
       .pipe(map((res) => res.map((dto) => this.mapDtoToModel(dto))));
   }
 
   create(category: CategoryPayload): Observable<Category> {
     return this.httpClient
-      .post<ApiResponse<CategoryDto>>(`${this.categoryBaseUrl}`, category)
+      .post<ApiResponse<CategoryResponsePayload>>(
+        `${this.categoryBaseUrl}`,
+        category
+      )
       .pipe(map((res) => this.mapDtoToModel(res)));
   }
 
   update(category: Category): Observable<Category> {
     return this.httpClient
-      .put<ApiResponse<CategoryDto>>(
+      .put<ApiResponse<CategoryResponsePayload>>(
         `${this.categoryBaseUrl}/${category.id}`,
         category
       )
@@ -39,7 +44,7 @@ export class CategoryService {
     return this.httpClient.delete<Category>(`${this.categoryBaseUrl}/${id}`);
   }
 
-  private mapDtoToModel(dto: CategoryDto): Category {
+  private mapDtoToModel(dto: CategoryResponsePayload): Category {
     return { id: dto.id, name: dto.name };
   }
 }
