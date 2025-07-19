@@ -2,15 +2,14 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { CategoryService } from '../../../../shared/services/category.service';
 import { ToastModule } from 'primeng/toast';
 import { Category } from '../../../../shared/models/category.model';
+import { CategoryService } from '../../../../shared/services/category.service';
 
 @Component({
   selector: 'app-delete-category',
   imports: [ButtonModule, ToastModule],
   templateUrl: './delete-category.component.html',
-  styleUrl: './delete-category.component.scss',
   providers: [CategoryService],
 })
 export class DeleteCategoryComponent {

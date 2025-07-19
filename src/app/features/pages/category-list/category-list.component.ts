@@ -28,7 +28,6 @@ interface Column {
   selector: 'app-category-list',
   imports: [CommonModule, ...PRIMENG_MODULES, FormsModule],
   templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.scss',
   providers: [CategoryService, DialogService, MessageService],
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
