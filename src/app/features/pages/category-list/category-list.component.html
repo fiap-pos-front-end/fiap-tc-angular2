@@ -36,6 +36,15 @@
   </ng-template>
 
   <ng-template #end>
+    <p-button
+      severity="danger"
+      label="Deletar selecionadas"
+      icon="pi pi-trash"
+      class="mr-2"
+      outlined
+      (onClick)="deleteMultipleCategories()"
+      [hidden]="!selectedCategories() || !selectedCategories().length"
+    />
     <p-button label="Nova" icon="pi pi-plus" (onClick)="newCategory()" />
   </ng-template>
 </p-toolbar>
@@ -47,6 +56,7 @@
   [loading]="loading"
   [paginator]="true"
   [globalFilterFields]="['name']"
+  [(selection)]="selectedCategories"
   [rowHover]="true"
   dataKey="id"
   [totalRecords]="categories().length"
@@ -55,6 +65,8 @@
 >
   <ng-template #header>
     <tr>
+      <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
+
       <th>
         <div class="flex gap-2 items-center">
           Categoria
@@ -68,6 +80,7 @@
 
   <ng-template #body let-category>
     <tr>
+      <td><p-tableCheckbox [value]="category" /></td>
       <td>{{ category.name }}</td>
       <td class="flex pr-4 justify-content-end">
         <p-button
@@ -93,3 +106,5 @@
     </tr>
   </ng-template>
 </p-table>
+
+<p-confirmDialog [style]="{ width: '450px' }" />
