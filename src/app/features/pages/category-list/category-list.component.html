@@ -25,13 +25,11 @@
       icon="pi pi-filter-slash"
       (click)="clear(dt)"
     />
-    <!-- Escondido porque ainda não temos exportação de csv -->
     <p-button
       class="mr-2"
       icon="pi pi-download"
       severity="secondary"
       (onClick)="onExportCsvClicked()"
-      [hidden]="true"
     />
   </ng-template>
 
@@ -53,6 +51,7 @@
   #dt
   [value]="categories()"
   [rows]="10"
+  [columns]="cols()"
   [loading]="loading"
   [paginator]="true"
   [globalFilterFields]="['name']"

@@ -19,6 +19,11 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { DeleteCategoryComponent } from '../../components/dialogs/delete-category/delete-category.component';
 import { FormCategoryComponent } from '../../components/dialogs/form-category/form-category.component';
 import { PRIMENG_MODULES } from './primeng-modules';
+
+interface Column {
+  field: string;
+  header: string;
+}
 @Component({
   selector: 'app-category-list',
   imports: [CommonModule, ...PRIMENG_MODULES, FormsModule],
@@ -41,6 +46,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   @ViewChild('dt') dt!: Table;
 
   private ref: DynamicDialogRef;
+  readonly cols = signal<Column[]>([]);
   readonly categories = signal<Category[]>([]);
   readonly selectedCategories = signal<Category[]>([]);
 
@@ -48,6 +54,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   searchInput = signal<string>('');
 
   ngOnInit(): void {
+    this.initializeColumns();
     this.fillTable();
   }
 
@@ -133,6 +140,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     if (this.ref) {
       this.ref.close();
     }
+  }
+
+  private initializeColumns() {
+    this.cols.set([{ field: 'name', header: 'Categoria' }]);
   }
 
   private fillTable() {
