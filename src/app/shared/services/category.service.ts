@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CategoryResponsePayload } from '@fiap-pos-front-end/fiap-tc-shared';
+import {
+  CategoryDTO,
+  CategoryResponsePayload,
+} from '@fiap-pos-front-end/fiap-tc-shared';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../types/api-response';
 
 // TODO: também tem que vir do shared, mas como ia mexer muita coisa, deixei pra depois
-import { Category, CategoryPayload } from '../models/category.model';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +25,7 @@ export class CategoryService {
       .pipe(map((res) => res.map((dto) => this.mapDtoToModel(dto))));
   }
 
-  create(category: CategoryPayload): Observable<Category> {
+  create(category: Omit<CategoryDTO, 'id'>): Observable<Category> {
     return this.httpClient
       .post<ApiResponse<CategoryResponsePayload>>(
         `${this.categoryBaseUrl}`,
