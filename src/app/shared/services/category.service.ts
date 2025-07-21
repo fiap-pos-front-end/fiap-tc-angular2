@@ -4,12 +4,9 @@ import {
   CategoryDTO,
   CategoryResponsePayload,
 } from '@fiap-pos-front-end/fiap-tc-shared';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../types/api-response';
-
-// TODO: também tem que vir do shared, mas como ia mexer muita coisa, deixei pra depois
-import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,35 +16,31 @@ export class CategoryService {
 
   private readonly categoryBaseUrl = `${environment.apiUrl}/categories`;
 
-  getAll(): Observable<Category[]> {
-    return this.httpClient
-      .get<ApiResponse<CategoryResponsePayload[]>>(`${this.categoryBaseUrl}`)
-      .pipe(map((res) => res.map((dto) => this.mapDtoToModel(dto))));
+  getAll(): Observable<CategoryResponsePayload[]> {
+    return this.httpClient.get<ApiResponse<CategoryResponsePayload[]>>(
+      `${this.categoryBaseUrl}`
+    );
   }
 
-  create(category: Omit<CategoryDTO, 'id'>): Observable<Category> {
-    return this.httpClient
-      .post<ApiResponse<CategoryResponsePayload>>(
-        `${this.categoryBaseUrl}`,
-        category
-      )
-      .pipe(map((res) => this.mapDtoToModel(res)));
+  create(
+    category: Omit<CategoryDTO, 'id'>
+  ): Observable<CategoryResponsePayload> {
+    return this.httpClient.post<ApiResponse<CategoryResponsePayload>>(
+      `${this.categoryBaseUrl}`,
+      category
+    );
   }
 
-  update(category: Category): Observable<Category> {
-    return this.httpClient
-      .put<ApiResponse<CategoryResponsePayload>>(
-        `${this.categoryBaseUrl}/${category.id}`,
-        category
-      )
-      .pipe(map((res) => this.mapDtoToModel(res)));
+  update(category: CategoryDTO): Observable<CategoryResponsePayload> {
+    return this.httpClient.put<ApiResponse<CategoryResponsePayload>>(
+      `${this.categoryBaseUrl}/${category.id}`,
+      category
+    );
   }
 
-  delete(id: string): Observable<Category> {
-    return this.httpClient.delete<Category>(`${this.categoryBaseUrl}/${id}`);
-  }
-
-  private mapDtoToModel(dto: CategoryResponsePayload): Category {
-    return { id: dto.id, name: dto.name };
+  delete(id: string): Observable<CategoryResponsePayload> {
+    return this.httpClient.delete<CategoryResponsePayload>(
+      `${this.categoryBaseUrl}/${id}`
+    );
   }
 }
