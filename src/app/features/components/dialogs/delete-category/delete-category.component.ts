@@ -5,6 +5,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { Category } from '../../../../shared/models/category.model';
 import { CategoryService } from '../../../../shared/services/category.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-delete-category',
@@ -17,6 +18,7 @@ export class DeleteCategoryComponent {
   private config = inject(DynamicDialogConfig);
   private ref = inject(DynamicDialogRef);
   private categoryService = inject(CategoryService);
+  private messageService = inject(MessageService);
 
   category: Category = this.config.data.category;
   remove() {
@@ -29,8 +31,19 @@ export class DeleteCategoryComponent {
     this.categoryService
       .delete(this.category.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.ref.close(this.config.data.category);
+      .subscribe({
+        next: () => {
+          this.ref.close(this.config.data.category);
+        },
+        error: (res) => {
+          if (res.error.error === 'FK_ERROR')
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Atenção',
+              detail: res.error.message,
+              life: 3000,
+            });
+        },
       });
   }
 }
