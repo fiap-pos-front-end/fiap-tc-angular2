@@ -3,9 +3,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { Category } from '../../../../shared/models/category.model';
 import { CategoryService } from '../../../../shared/services/category.service';
 import { MessageService } from 'primeng/api';
+import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
 
 @Component({
   selector: 'app-delete-category',

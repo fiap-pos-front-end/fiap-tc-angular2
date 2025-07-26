@@ -14,11 +14,11 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs';
-import { Category } from '../../../shared/models/category.model';
 import { CategoryService } from '../../../shared/services/category.service';
 import { DeleteCategoryComponent } from '../../components/dialogs/delete-category/delete-category.component';
 import { FormCategoryComponent } from '../../components/dialogs/form-category/form-category.component';
 import { PRIMENG_MODULES } from './primeng-modules';
+import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
 
 interface Column {
   field: string;

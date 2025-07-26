@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import {
-  CategoryDTO,
-  CategoryResponsePayload,
-} from '@fiap-pos-front-end/fiap-tc-shared';
+import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../types/api-response';
@@ -16,31 +13,27 @@ export class CategoryService {
 
   private readonly categoryBaseUrl = `${environment.apiUrl}/categories`;
 
-  getAll(): Observable<CategoryResponsePayload[]> {
-    return this.httpClient.get<ApiResponse<CategoryResponsePayload[]>>(
+  getAll(): Observable<Category[]> {
+    return this.httpClient.get<ApiResponse<Category[]>>(
       `${this.categoryBaseUrl}`
     );
   }
 
-  create(
-    category: Omit<CategoryDTO, 'id'>
-  ): Observable<CategoryResponsePayload> {
-    return this.httpClient.post<ApiResponse<CategoryResponsePayload>>(
+  create(category: Omit<Category, 'id' | 'userId'>): Observable<Category> {
+    return this.httpClient.post<ApiResponse<Category>>(
       `${this.categoryBaseUrl}`,
       category
     );
   }
 
-  update(category: CategoryDTO): Observable<CategoryResponsePayload> {
-    return this.httpClient.put<ApiResponse<CategoryResponsePayload>>(
+  update(category: Omit<Category, 'userId'>): Observable<Category> {
+    return this.httpClient.put<ApiResponse<Category>>(
       `${this.categoryBaseUrl}/${category.id}`,
       category
     );
   }
 
-  delete(id: string): Observable<CategoryResponsePayload> {
-    return this.httpClient.delete<CategoryResponsePayload>(
-      `${this.categoryBaseUrl}/${id}`
-    );
+  delete(id: number): Observable<Category> {
+    return this.httpClient.delete<Category>(`${this.categoryBaseUrl}/${id}`);
   }
 }
