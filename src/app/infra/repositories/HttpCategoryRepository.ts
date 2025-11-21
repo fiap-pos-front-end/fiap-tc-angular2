@@ -11,7 +11,7 @@ export class HttpCategoryRepository implements CategoryRepository {
   private readonly categoryBaseUrl = `${environment.apiUrl}/categories`;
 
   getAll(): Observable<Category[]> {
-    throw new Error('Method not implemented.');
+    return this.httpClient.get<Category[]>(`${this.categoryBaseUrl}`);
   }
 
   create(name: string): Observable<Category> {

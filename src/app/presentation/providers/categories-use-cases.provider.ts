@@ -2,6 +2,7 @@ import { Provider } from '@angular/core';
 import { CategoryRepository } from '../../domain/repositories/CategoryRepository';
 import { CreateCategoryUseCase } from '../../domain/usecases/CreateCategoryUseCase';
 import { DeleteCategoryUseCase } from '../../domain/usecases/DeleteCategoryUseCase';
+import { GetAllCategoriesUseCase } from '../../domain/usecases/GetAllCategoriesUseCase';
 import { HttpCategoryRepository } from '../../infra/repositories/HttpCategoryRepository';
 
 /**
@@ -12,6 +13,12 @@ import { HttpCategoryRepository } from '../../infra/repositories/HttpCategoryRep
  *  eu trocaria apenas o provider do token, e não de todos os Casos de Uso (como aconteceria aqui).
  */
 export const CATEGORIES_USE_CASE_PROVIDERS: Provider[] = [
+  {
+    provide: GetAllCategoriesUseCase,
+    useFactory: (categoryRepository: CategoryRepository) =>
+      new GetAllCategoriesUseCase(categoryRepository),
+    deps: [HttpCategoryRepository],
+  },
   {
     provide: CreateCategoryUseCase,
     useFactory: (categoryRepository: CategoryRepository) =>

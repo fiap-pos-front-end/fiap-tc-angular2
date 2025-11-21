@@ -13,12 +13,6 @@ export class CategoryService {
 
   private readonly categoryBaseUrl = `${environment.apiUrl}/categories`;
 
-  getAll(): Observable<Category[]> {
-    return this.httpClient.get<ApiResponse<Category[]>>(
-      `${this.categoryBaseUrl}`
-    );
-  }
-
   update(category: Omit<Category, 'userId'>): Observable<Category> {
     return this.httpClient.put<ApiResponse<Category>>(
       `${this.categoryBaseUrl}/${category.id}`,
