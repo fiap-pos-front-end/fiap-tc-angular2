@@ -3,6 +3,7 @@ import { CategoryRepository } from '../../domain/repositories/CategoryRepository
 import { CreateCategoryUseCase } from '../../domain/usecases/CreateCategoryUseCase';
 import { DeleteCategoryUseCase } from '../../domain/usecases/DeleteCategoryUseCase';
 import { GetAllCategoriesUseCase } from '../../domain/usecases/GetAllCategoriesUseCase';
+import { UpdateCategoryUseCase } from '../../domain/usecases/UpdateCategoryUseCase';
 import { HttpCategoryRepository } from '../../infra/repositories/HttpCategoryRepository';
 
 /**
@@ -23,6 +24,12 @@ export const CATEGORIES_USE_CASE_PROVIDERS: Provider[] = [
     provide: CreateCategoryUseCase,
     useFactory: (categoryRepository: CategoryRepository) =>
       new CreateCategoryUseCase(categoryRepository),
+    deps: [HttpCategoryRepository],
+  },
+  {
+    provide: UpdateCategoryUseCase,
+    useFactory: (categoryRepository: CategoryRepository) =>
+      new UpdateCategoryUseCase(categoryRepository),
     deps: [HttpCategoryRepository],
   },
   {

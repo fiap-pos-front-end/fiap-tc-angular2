@@ -18,8 +18,13 @@ export class HttpCategoryRepository implements CategoryRepository {
     return this.httpClient.post<Category>(this.categoryBaseUrl, { name });
   }
 
-  update(id: number, name: string): Observable<Category> {
-    throw new Error('Method not implemented.');
+  update(categoryId: number, name: string): Observable<Category> {
+    return this.httpClient.put<Category>(
+      `${this.categoryBaseUrl}/${categoryId}`,
+      {
+        name,
+      }
+    );
   }
 
   delete(id: number): Observable<void> {
