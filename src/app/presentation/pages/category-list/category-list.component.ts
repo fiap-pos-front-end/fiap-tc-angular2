@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -18,7 +19,6 @@ import { CategoryService } from '../../../shared/services/category.service';
 import { DeleteCategoryComponent } from '../../components/dialogs/delete-category/delete-category.component';
 import { FormCategoryComponent } from '../../components/dialogs/form-category/form-category.component';
 import { PRIMENG_MODULES } from './primeng-modules';
-import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
 
 interface Column {
   field: string;

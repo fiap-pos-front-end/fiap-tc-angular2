@@ -1,11 +1,11 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { CategoryService } from '../../../../shared/services/category.service';
-import { MessageService } from 'primeng/api';
-import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
 
 @Component({
   selector: 'app-delete-category',
