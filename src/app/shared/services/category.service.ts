@@ -19,13 +19,6 @@ export class CategoryService {
     );
   }
 
-  create(category: Omit<Category, 'id' | 'userId'>): Observable<Category> {
-    return this.httpClient.post<ApiResponse<Category>>(
-      `${this.categoryBaseUrl}`,
-      category
-    );
-  }
-
   update(category: Omit<Category, 'userId'>): Observable<Category> {
     return this.httpClient.put<ApiResponse<Category>>(
       `${this.categoryBaseUrl}/${category.id}`,

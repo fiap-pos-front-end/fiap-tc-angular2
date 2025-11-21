@@ -1,9 +1,11 @@
 import { Component, DestroyRef, inject, model, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { CreateCategoryUseCase } from '../../../../domain/usecases/CreateCategoryUseCase';
 import { CategoryService } from '../../../../shared/services/category.service';
 
 @Component({
@@ -13,10 +15,14 @@ import { CategoryService } from '../../../../shared/services/category.service';
   providers: [CategoryService],
 })
 export class FormCategoryComponent implements OnInit {
-  private destroyRef = inject(DestroyRef);
   private ref = inject(DynamicDialogRef);
+  private destroyRef = inject(DestroyRef);
   private config = inject(DynamicDialogConfig);
+  private messageService = inject(MessageService);
   private categoryService = inject(CategoryService);
+
+  private createCategoryUseCase = inject(CreateCategoryUseCase);
+
   name = model('');
   isAdding = true;
 
@@ -34,11 +40,21 @@ export class FormCategoryComponent implements OnInit {
   }
 
   private createCategory() {
-    this.categoryService
-      .create({ name: this.name() })
+    this.createCategoryUseCase
+      .execute(this.name())
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((res) => {
-        this.ref.close(res);
+      .subscribe({
+        next: (res) => {
+          this.ref.close(res);
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: error.error.message,
+            life: 3000,
+          });
+        },
       });
   }
 

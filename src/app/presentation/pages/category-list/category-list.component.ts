@@ -15,10 +15,12 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs';
+import { HttpCategoryRepository } from '../../../infra/repositories/HttpCategoryRepository';
 import { CategoryService } from '../../../shared/services/category.service';
 import { DeleteCategoryComponent } from '../../components/dialogs/delete-category/delete-category.component';
 import { FormCategoryComponent } from '../../components/dialogs/form-category/form-category.component';
-import { PRIMENG_MODULES } from './primeng-modules';
+import { CATEGORIES_USE_CASE_PROVIDERS } from '../../providers/categories-use-cases.provider';
+import { PRIMENG_MODULES } from '../../providers/primeng-modules.provider';
 
 interface Column {
   field: string;
@@ -28,7 +30,16 @@ interface Column {
   selector: 'app-category-list',
   imports: [CommonModule, ...PRIMENG_MODULES, FormsModule],
   templateUrl: './category-list.component.html',
-  providers: [CategoryService, DialogService, MessageService],
+  providers: [
+    DialogService,
+    MessageService,
+
+    // Infra (leia a nota dentro do provider de CategoriesUseCases)
+    HttpCategoryRepository,
+
+    // Use Cases (via factory providers)
+    ...CATEGORIES_USE_CASE_PROVIDERS,
+  ],
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
   private destroyRef = inject(DestroyRef);
