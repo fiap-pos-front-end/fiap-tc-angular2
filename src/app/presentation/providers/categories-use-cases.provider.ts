@@ -1,6 +1,7 @@
 import { Provider } from '@angular/core';
 import { CategoryRepository } from '../../domain/repositories/CategoryRepository';
 import { CreateCategoryUseCase } from '../../domain/usecases/CreateCategoryUseCase';
+import { DeleteCategoryUseCase } from '../../domain/usecases/DeleteCategoryUseCase';
 import { HttpCategoryRepository } from '../../infra/repositories/HttpCategoryRepository';
 
 /**
@@ -15,6 +16,12 @@ export const CATEGORIES_USE_CASE_PROVIDERS: Provider[] = [
     provide: CreateCategoryUseCase,
     useFactory: (categoryRepository: CategoryRepository) =>
       new CreateCategoryUseCase(categoryRepository),
+    deps: [HttpCategoryRepository],
+  },
+  {
+    provide: DeleteCategoryUseCase,
+    useFactory: (categoryRepository: CategoryRepository) =>
+      new DeleteCategoryUseCase(categoryRepository),
     deps: [HttpCategoryRepository],
   },
 ];

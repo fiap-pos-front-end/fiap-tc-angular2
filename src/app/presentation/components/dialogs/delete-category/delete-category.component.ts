@@ -5,31 +5,34 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
-import { CategoryService } from '../../../../shared/services/category.service';
+import { DeleteCategoryUseCase } from '../../../../domain/usecases/DeleteCategoryUseCase';
 
 @Component({
   selector: 'app-delete-category',
   imports: [ButtonModule, ToastModule],
   templateUrl: './delete-category.component.html',
-  providers: [CategoryService],
 })
 export class DeleteCategoryComponent {
+  private ref = inject(DynamicDialogRef);
   private destroyRef = inject(DestroyRef);
   private config = inject(DynamicDialogConfig);
-  private ref = inject(DynamicDialogRef);
-  private categoryService = inject(CategoryService);
   private messageService = inject(MessageService);
 
+  private deleteCategoryUseCase = inject(DeleteCategoryUseCase);
+
   category: Category = this.config.data.category;
+
   remove() {
     this.removeCategory();
   }
+
   close() {
     this.ref.close();
   }
+
   private removeCategory() {
-    this.categoryService
-      .delete(this.category.id)
+    this.deleteCategoryUseCase
+      .execute(this.category.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

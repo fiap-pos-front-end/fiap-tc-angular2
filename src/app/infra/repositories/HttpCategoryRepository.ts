@@ -23,6 +23,6 @@ export class HttpCategoryRepository implements CategoryRepository {
   }
 
   delete(id: number): Observable<void> {
-    throw new Error('Method not implemented.');
+    return this.httpClient.delete<void>(`${this.categoryBaseUrl}/${id}`);
   }
 }

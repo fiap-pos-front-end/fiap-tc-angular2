@@ -25,8 +25,4 @@ export class CategoryService {
       category
     );
   }
-
-  delete(id: number): Observable<Category> {
-    return this.httpClient.delete<Category>(`${this.categoryBaseUrl}/${id}`);
-  }
 }
