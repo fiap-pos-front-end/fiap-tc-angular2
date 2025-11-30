@@ -14,11 +14,13 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs';
-import { CategoryService } from '../../../shared/services/category.service';
+import { Category } from '../../../domain/entities/Category';
+import { GetAllCategoriesUseCase } from '../../../domain/usecases/GetAllCategoriesUseCase';
+import { HttpCategoryRepository } from '../../../infra/repositories/HttpCategoryRepository';
 import { DeleteCategoryComponent } from '../../components/dialogs/delete-category/delete-category.component';
 import { FormCategoryComponent } from '../../components/dialogs/form-category/form-category.component';
-import { PRIMENG_MODULES } from './primeng-modules';
-import { Category } from '@fiap-pos-front-end/fiap-tc-shared';
+import { CATEGORIES_USE_CASE_PROVIDERS } from '../../providers/categories-use-cases.provider';
+import { PRIMENG_MODULES } from '../../providers/primeng-modules.provider';
 
 interface Column {
   field: string;
@@ -28,13 +30,23 @@ interface Column {
   selector: 'app-category-list',
   imports: [CommonModule, ...PRIMENG_MODULES, FormsModule],
   templateUrl: './category-list.component.html',
-  providers: [CategoryService, DialogService, MessageService],
+  providers: [
+    DialogService,
+    MessageService,
+
+    // Infra (leia a nota dentro do provider de CategoriesUseCases)
+    HttpCategoryRepository,
+
+    // Use Cases (via factory providers)
+    ...CATEGORIES_USE_CASE_PROVIDERS,
+  ],
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
   private destroyRef = inject(DestroyRef);
   private dialogService = inject(DialogService);
   private messageService = inject(MessageService);
-  private categoryService = inject(CategoryService);
+
+  private getAllCategoriesUseCase = inject(GetAllCategoriesUseCase);
 
   @ViewChild('dt') dt!: Table;
 
@@ -96,8 +108,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
   private fillTable() {
     this.loading = true;
-    this.categoryService
-      .getAll()
+
+    this.getAllCategoriesUseCase
+      .execute()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => (this.loading = false))
