@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
@@ -40,6 +41,7 @@ interface Column {
     // Use Cases (via factory providers)
     ...CATEGORIES_USE_CASE_PROVIDERS,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
   private destroyRef = inject(DestroyRef);
