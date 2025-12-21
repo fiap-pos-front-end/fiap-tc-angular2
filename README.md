@@ -57,20 +57,20 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ### Concepts Used
 
 1. **Clean Architecture**
-  - Clear separation between domain, application, and infrastructure layers
-  - Independence of the domain layer from external frameworks and libraries
-  - Dependency inversion to improve flexibility and maintainability
+  - Clear separation between domain, application, and infrastructure layers.
+  - Independence of the domain layer from external frameworks and libraries.
+  - Dependency inversion to improve flexibility and maintainability.
 
-2. **Module Federation**
-   - Integration with other microfrontends
-   - Dynamic loading of remote modules
-   - Dependency sharing across applications
+2. **Clean Architecture**
+   - Integration with other microfrontends.
+   - Dynamic loading of remote modules.
+   - Dependency sharing across applications.
 
 3. **Design Patterns**
-   - Repository Pattern for data abstraction
-   - Factory Method for object creation
-   - Dependency Injection for inversion of control
-
+   - Repository Pattern for data abstraction.
+   - Factory Method for object creation.
+   - Dependency Injection for inversion of control.
+  
 4. **Application Performance**
    - Optimization of change detection using ChangeDetectionStrategy.OnPush, reducing unnecessary re-rendering.
    - Implementation of Lazy Loading to reduce the initial application load time.
