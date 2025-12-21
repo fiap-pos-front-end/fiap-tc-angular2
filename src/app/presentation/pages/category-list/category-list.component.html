@@ -13,7 +13,8 @@
         pInputText
         type="text"
         placeholder="Pesquisar..."
-        [(ngModel)]="searchInput"
+        [ngModel]="searchInput()"
+        (ngModelChange)="searchInput.set($event); onSearchInput($event)"
         (input)="onSearchInput($event)"
         class="w-full"
       />
