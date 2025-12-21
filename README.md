@@ -54,6 +54,30 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
+### Concepts Used
+
+1. **Clean Architecture**
+  - Clear separation between domain, application, and infrastructure layers
+  - Independence of the domain layer from external frameworks and libraries
+  - Dependency inversion to improve flexibility and maintainability
+
+2. **Module Federation**
+   - Integration with other microfrontends
+   - Dynamic loading of remote modules
+   - Dependency sharing across applications
+
+3. **Design Patterns**
+   - Repository Pattern for data abstraction
+   - Factory Method for object creation
+   - Dependency Injection for inversion of control
+
+4. **Application Performance**
+   - Optimization of change detection using ChangeDetectionStrategy.OnPush, reducing unnecessary re-rendering.
+   - Implementation of Lazy Loading to reduce the initial application load time.
+   - Use of Signals for more efficient and performant local state management.
+   - Application of trackBy in lists to prevent unnecessary DOM re-creation.
+   - Use of Observables to handle asynchronous operations in a reactive and safe manner.
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
