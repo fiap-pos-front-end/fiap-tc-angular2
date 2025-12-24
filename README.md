@@ -1,26 +1,26 @@
 # FiapTcAngular2
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+Este projeto foi gerado utilizando o [Angular CLI](https://github.com/angular/angular-cli) versão 19.2.0.
 
-## Development server
+## Servidor de desenvolvimento
 
-To start a local development server, run:
+Para iniciar um servidor local de desenvolvimento, execute:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4202/`. The application will automatically reload whenever you modify any of the source files.
+Assim que o servidor estiver em execução, abra seu navegador e acesse `http://localhost:4202/`. A aplicação será recarregada automaticamente sempre que você modificar qualquer arquivo de código-fonte.
 
-## Code scaffolding
+## Geração de código
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+O Angular CLI inclui ferramentas poderosas de scaffolding de código. Para gerar um novo componente, execute:
 
 ```bash
 ng generate component component-name
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para uma lista completa dos schematics disponíveis (como `components`, `directives` ou `pipes`), execute:
 
 ```bash
 ng generate --help
@@ -28,55 +28,55 @@ ng generate --help
 
 ## Building
 
-To build the project run:
+Para realizar o build do projeto, execute:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Isso irá compilar o projeto e armazenar os artefatos de build no diretório `dist/`. Por padrão, o build de produção otimiza a aplicação para desempenho e velocidade.
 
-## Running unit tests
+## Execução de testes unitários
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Para executar testes unitários com o test runner [Karma](https://karma-runner.github.io), utilize o seguinte comando:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Execução de testes end-to-end
 
-For end-to-end (e2e) testing, run:
+Para testes end-to-end (e2e), execute:
 
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+O Angular CLI não vem com um framework de testes end-to-end por padrão. Você pode escolher aquele que melhor atenda às suas necessidades.
 
-### Concepts Used
+### Conceitos Utilizados
 
 1. **Clean Architecture**
-   - Clear separation between domain, application, and infrastructure layers.
-   - Independence of the domain layer from external frameworks and libraries.
-   - Dependency inversion to improve flexibility and maintainability.
+   - Separação clara entre camadas de domínio, aplicação e infraestrutura
+   - Independência de frameworks e bibliotecas externas no domínio
+   - Inversão de dependências para maior flexibilidade
 
-2. **Clean Architecture**
-   - Integration with other microfrontends.
-   - Dynamic loading of remote modules.
-   - Dependency sharing across applications.
+2. **Module Federation**
+   - Integração com outros microfrontends
+   - Carregamento dinâmico de módulos remotos
+   - Compartilhamento de dependências
 
-3. **Design Patterns**
-   - Repository Pattern for data abstraction.
-   - Factory Method for object creation.
-   - Dependency Injection for inversion of control.
-  
-4. **Application Performance**
-   - Optimization of change detection using ChangeDetectionStrategy.OnPush, reducing unnecessary re-rendering.
-   - Implementation of Lazy Loading to reduce the initial application load time.
-   - Use of Signals for more efficient and performant local state management.
-   - Application of trackBy in lists to prevent unnecessary DOM re-creation.
-   - Use of Observables to handle asynchronous operations in a reactive and safe manner.
+3. **Padrões de Projeto**
+   - Repository Pattern para abstração de dados
+   - Factory Method para criação de objetos
+   - Dependency Injection para inversão de controle
+
+4. **Performance da aplicação**
+   - Otimização na detecção de mudanças utilizando ChangeDetectionStrategy.OnPush, reduzindo re-renderizações desnecessárias.
+   - Implementação de Lazy Loading para diminuir o tempo de carregamento inicial da aplicação.
+   - Utilização de Signals para uma gestão de estado local mais eficiente e performática.
+   - Aplicação do trackBy em listas para evitar recriação desnecessária do DOM.
+   - Uso de Observables para lidar com operações assíncronas de forma reativa e segura.
 
 ## Additional Resources
 
